@@ -1,129 +1,345 @@
-# emprendecontrol <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EmprendeControl PRO</title>
 
 <style>
-body { font-family: Arial; background: #f5f5f5; text-align: center; }
-h1 { color: #6a0dad; }
-
-.box {
-    background: white;
-    padding: 15px;
-    margin: 10px auto;
-    width: 90%;
-    max-width: 350px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px #ccc;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
 }
 
-input, select, button {
-    padding: 10px;
-    margin: 5px;
-    width: 90%;
+body{
+background:linear-gradient(to bottom,#f4f4f4,#ece3ff);
+padding:20px;
+color:#333;
 }
 
-button {
-    background: #6a0dad;
-    color: white;
-    border: none;
+header{
+background:linear-gradient(135deg,#6a0dad,#8e44ec);
+color:white;
+padding:20px;
+border-radius:15px;
+text-align:center;
+margin-bottom:20px;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
 }
 
-li { text-align: left; margin: 10px 0; }
-small { color: gray; }
+header p{
+margin-top:8px;
+font-size:14px;
+}
+
+.logo-img{
+width:120px;
+margin-bottom:10px;
+animation:flotar 3s ease-in-out infinite;
+}
+
+@keyframes flotar{
+0%{transform:translateY(0px);}
+50%{transform:translateY(-8px);}
+100%{transform:translateY(0px);}
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+box-shadow:0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card h2{
+margin-bottom:15px;
+color:#6a0dad;
+}
+
+input, select{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border-radius:10px;
+border:1px solid #ccc;
+font-size:15px;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#6a0dad;
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#520b9e;
+transform:scale(1.03);
+}
+
+.total-box{
+text-align:center;
+font-size:22px;
+font-weight:bold;
+color:#6a0dad;
+}
+
+#historial{
+list-style:none;
+}
+
+#historial li{
+background:#f9f9f9;
+padding:15px;
+border-radius:10px;
+margin-bottom:10px;
+border-left:6px solid #6a0dad;
+}
+
+.acciones{
+margin-top:10px;
+display:flex;
+gap:10px;
+}
+
+.editar{
+background:#ff9800;
+}
+
+.eliminar{
+background:#e53935;
+}
+
+.vacio{
+text-align:center;
+color:gray;
+padding:20px;
+}
+
+.grafico{
+margin-top:15px;
+background:#eee;
+border-radius:10px;
+overflow:hidden;
+height:25px;
+}
+
+.barra{
+height:100%;
+background:#6a0dad;
+text-align:center;
+color:white;
+line-height:25px;
+}
+
+footer{
+text-align:center;
+background:white;
+padding:15px;
+border-radius:15px;
+box-shadow:0 4px 8px rgba(0,0,0,0.1);
+margin-top:20px;
+color:gray;
+font-size:14px;
+}
+
+@media(max-width:600px){
+body{
+padding:10px;
+}
+}
 </style>
-
 </head>
+
 <body>
 
-<h1>📱 EmprendeControl PRO</h1>
+<div class="container">
 
-<div class="box">
-<h3>Registrar Venta</h3>
+<header>
+<img class="logo-img" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="logo">
+<h1>📊 EmprendeControl PRO</h1>
+<p>Organiza pedidos, ingresos y métodos de pago fácilmente</p>
+</header>
 
-<input type="text" id="cliente" placeholder="Cliente">
-<input type="number" id="monto" placeholder="Monto S/">
+<div class="card">
+<h2>➕ Registrar Venta</h2>
 
-<select id="pago">
-<option value="">Método de pago</option>
-<option value="Crédito">Tarjeta Crédito</option>
-<option value="Débito">Tarjeta Débito</option>
-<option value="Yape">Yape</option>
-<option value="Plin">Plin</option>
-<option value="Efectivo">Efectivo</option>
+<input type="text" id="cliente" placeholder="Nombre del cliente">
+
+<input type="text" id="producto" placeholder="Producto o servicio">
+
+<select id="categoria">
+<option value="">Selecciona categoría</option>
+<option>Comida</option>
+<option>Ropa</option>
+<option>Belleza</option>
+<option>Tecnología</option>
+<option>Otros</option>
 </select>
 
-<button onclick="agregar()">Guardar</button>
+<input type="number" id="monto" placeholder="Monto S/">
+
+<select id="metodo">
+<option value="">Método de pago</option>
+<option>Tarjeta Crédito</option>
+<option>Tarjeta Débito</option>
+<option>Yape</option>
+<option>Plin</option>
+<option>Efectivo</option>
+<option>Transferencia</option>
+</select>
+
+<button onclick="guardarVenta()">Guardar Venta</button>
 </div>
 
-<div class="box">
-<h3>Historial</h3>
-<ul id="lista"></ul>
+<div class="card">
+<h2>📈 Resumen General</h2>
+<img src="https://cdn-icons-png.flaticon.com/512/2331/2331970.png" width="80" style="margin-bottom:10px;">
+<div class="total-box">
+Total Ingresos: S/ <span id="total">0</span>
 </div>
 
-<div class="box">
-<h3>Total: S/ <span id="total">0</span></h3>
+<div class="grafico">
+<div class="barra" id="barra">0%</div>
+</div>
+</div>
+
+<div class="card">
+<h2>🧾 Historial de Ventas</h2>
+<ul id="historial"></ul>
+</div>
+
+<footer>
+EmprendeControl PRO © 2026
+</footer>
+
 </div>
 
 <script>
-let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
+let ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+let editando = null;
 
-function guardar() {
-    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+function actualizarPantalla(){
+const historial = document.getElementById("historial");
+const totalTexto = document.getElementById("total");
+const barra = document.getElementById("barra");
+
+historial.innerHTML = "";
+
+if(ventas.length === 0){
+    historial.innerHTML = `
+    <div class="vacio">
+    No hay ventas registradas aún 📭
+    </div>`;
 }
 
-function mostrar() {
-    let lista = document.getElementById("lista");
-    lista.innerHTML = "";
-    let total = 0;
+let total = 0;
 
-    pedidos.forEach((p, i) => {
-        let item = document.createElement("li");
+ventas.forEach((venta, index)=>{
 
-        item.innerHTML = `
-        <b>${p.cliente}</b><br>
-        💰 S/ ${p.monto}<br>
-        💳 ${p.pago}<br>
-        🕒 ${p.fecha}<br>
-        <button onclick="eliminar(${i})">Eliminar</button>
-        `;
+    total += Number(venta.monto);
 
-        lista.appendChild(item);
-        total += p.monto;
-    });
+    historial.innerHTML += `
+    <li>
+    <strong>Cliente:</strong> ${venta.cliente}<br>
+    <strong>Producto:</strong> ${venta.producto}<br>
+    <strong>Categoría:</strong> ${venta.categoria}<br>
+    <strong>Monto:</strong> S/ ${venta.monto}<br>
+    <strong>Método:</strong> ${venta.metodo}<br>
+    <strong>Fecha:</strong> ${venta.fecha}<br>
 
-    document.getElementById("total").textContent = total;
+    <div class="acciones">
+    <button class="editar" onclick="editarVenta(${index})">Editar</button>
+    <button class="eliminar" onclick="eliminarVenta(${index})">Eliminar</button>
+    </div>
+    </li>
+    `;
+});
+
+localStorage.setItem("ventas", JSON.stringify(ventas));
+
+const porcentaje = Math.min(total,1000)/10;
+
+barra.style.width = porcentaje + "%";
+barra.textContent = porcentaje.toFixed(0) + "%";
+
+totalTexto.textContent = total.toFixed(2);
 }
 
-function agregar() {
-    let cliente = document.getElementById("cliente").value;
-    let monto = parseFloat(document.getElementById("monto").value);
-    let pago = document.getElementById("pago").value;
+function guardarVenta(){
 
-    if(cliente === "" || isNaN(monto) || pago === "") {
-        alert("Completa todos los datos");
-        return;
-    }
+const cliente = document.getElementById("cliente").value;
+const producto = document.getElementById("producto").value;
+const categoria = document.getElementById("categoria").value;
+const monto = document.getElementById("monto").value;
+const metodo = document.getElementById("metodo").value;
 
-    let fecha = new Date().toLocaleString();
-
-    pedidos.push({cliente, monto, pago, fecha});
-    guardar();
-    mostrar();
-
-    document.getElementById("cliente").value = "";
-    document.getElementById("monto").value = "";
-    document.getElementById("pago").value = "";
+if(cliente === "" || producto === "" || categoria === "" || monto === "" || metodo === ""){
+alert("Completa todos los campos");
+return;
 }
 
-function eliminar(i) {
-    pedidos.splice(i, 1);
-    guardar();
-    mostrar();
+const fecha = new Date().toLocaleString();
+
+const nuevaVenta = {
+cliente,
+producto,
+categoria,
+monto,
+metodo,
+fecha
+};
+
+if(editando === null){
+ventas.push(nuevaVenta);
+}else{
+ventas[editando] = nuevaVenta;
+editando = null;
 }
 
-mostrar();
+limpiarCampos();
+actualizarPantalla();
+}
+
+function editarVenta(index){
+const venta = ventas[index];
+
+cliente.value = venta.cliente;
+producto.value = venta.producto;
+categoria.value = venta.categoria;
+monto.value = venta.monto;
+metodo.value = venta.metodo;
+
+editando = index;
+}
+
+function eliminarVenta(index){
+ventas.splice(index,1);
+actualizarPantalla();
+}
+
+function limpiarCampos(){
+cliente.value = "";
+producto.value = "";
+categoria.value = "";
+monto.value = "";
+metodo.value = "";
+}
+
+actualizarPantalla();
 </script>
 
 </body>
