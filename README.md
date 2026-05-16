@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EmprendeControl PRO</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+background:#f5f2ff;
+padding:15px;
+color:#222;
+}
+
+.container{
+max-width:430px;
+margin:auto;
+padding-bottom:120px;
+}
+
+/* HEADER */
+
+.header{
+background:linear-gradient(135deg,#7b2cff,#9d5cff);
+padding:28px 22px;
+border-radius:32px;
+color:white;
+position:relative;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(123,44,255,0.3);
+margin-bottom:22px;
+}
+
+.header::before{
+content:"";
+position:absolute;
+width:180px;
+height:180px;
+background:rgba(255,255,255,0.09);
+border-radius:50%;
+top:-60px;
+right:-50px;
+}
+
+.header::after{
+content:"";
+position:absolute;
+width:130px;
+height:130px;
+background:rgba(255,255,255,0.07);
+border-radius:50%;
+bottom:-40px;
+left:-30px;
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:relative;
+z-index:2;
+}
+
+.logo{
+font-size:55px;
+}
+
+.notif{
+background:white;
+color:#7b2cff;
+width:42px;
+height:42px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:20px;
+font-weight:bold;
+}
+
+.header h1{
+margin-top:10px;
+font-size:30px;
+position:relative;
+z-index:2;
+}
+
+.pro{
+background:#ff76b6;
+padding:5px 12px;
+border-radius:20px;
+font-size:13px;
+margin-left:8px;
+}
+
+.header p{
+margin-top:10px;
+font-size:15px;
+opacity:0.95;
+position:relative;
+z-index:2;
+line-height:1.4;
+}
+
+/* MENU */
+
+.menu{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px;
+margin-top:25px;
+position:relative;
+z-index:2;
+}
+
+.menu-item{
+background:white;
+padding:14px 10px;
+border-radius:20px;
+text-align:center;
+color:#7b2cff;
+font-size:12px;
+font-weight:bold;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+transition:0.3s;
+}
+
+.menu-item:hover{
+transform:translateY(-3px);
+}
+
+/* CARDS */
+
+.card{
+background:white;
+padding:22px;
+border-radius:28px;
+margin-bottom:22px;
+box-shadow:0 5px 18px rgba(0,0,0,0.07);
+}
+
+.card h2{
+color:#7b2cff;
+margin-bottom:16px;
+font-size:22px;
+}
+
+/* INPUTS */
+
+input,select{
+width:100%;
+padding:15px;
+margin-bottom:14px;
+border:none;
+border-radius:18px;
+background:#f7f4ff;
+font-size:15px;
+border:2px solid transparent;
+transition:0.3s;
+}
+
+input:focus,select:focus{
+outline:none;
+border-color:#9d5cff;
+background:white;
+}
+
+/* BUTTON */
+
+button{
+width:100%;
+padding:16px;
+border:none;
+border-radius:18px;
+background:linear-gradient(135deg,#7b2cff,#9d5cff);
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 6px 14px rgba(123,44,255,0.25);
+}
+
+button:hover{
+transform:scale(1.02);
+}
+
+/* TOTAL */
+
+.total{
+font-size:40px;
+font-weight:bold;
+text-align:center;
+color:#7b2cff;
+margin:15px 0;
+}
+
+/* BARRA */
+
+.grafico{
+width:100%;
+height:26px;
+background:#eee;
+border-radius:20px;
+overflow:hidden;
+margin-top:12px;
+}
+
+.barra{
+height:100%;
+width:0%;
+background:linear-gradient(135deg,#7b2cff,#b57cff);
+text-align:center;
+color:white;
+font-size:13px;
+font-weight:bold;
+line-height:26px;
+}
+
+/* METODOS */
+
+.metodo{
+display:flex;
+justify-content:space-between;
+padding:14px;
+background:#faf8ff;
+border-radius:18px;
+margin-top:12px;
+font-weight:bold;
+}
+
+/* HISTORIAL */
+
+.historial li{
+list-style:none;
+background:#faf8ff;
+padding:18px;
+border-radius:22px;
+margin-bottom:14px;
+border-left:6px solid #9d5cff;
+}
+
+.tag{
+float:right;
+background:#9d5cff;
+color:white;
+padding:6px 12px;
+border-radius:14px;
+font-size:12px;
+}
+
+.fecha{
+font-size:12px;
+color:gray;
+margin-top:5px;
+}
+
+.acciones{
+display:flex;
+gap:10px;
+margin-top:12px;
+}
+
+.editar{
+background:#ff9800;
+}
+
+.eliminar{
+background:#e53935;
+}
+
+/* BOTTOM MENU */
+
+.bottom{
+position:fixed;
+bottom:15px;
+left:50%;
+transform:translateX(-50%);
+width:92%;
+max-width:430px;
+background:white;
+padding:16px;
+border-radius:28px;
+display:flex;
+justify-content:space-around;
+align-items:center;
+box-shadow:0 8px 20px rgba(0,0,0,0.12);
+}
+
+.bottom div{
+text-align:center;
+font-size:12px;
+font-weight:bold;
+color:#7b2cff;
+cursor:pointer;
+transition:0.3s;
+}
+
+.bottom div:hover{
+transform:scale(1.1);
+}
+
+.plus{
+width:65px;
+height:65px;
+background:linear-gradient(135deg,#7b2cff,#9d5cff);
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:34px;
+color:white;
+margin-top:-45px;
+box-shadow:0 8px 20px rgba(123,44,255,0.35);
+cursor:pointer;
+transition:0.3s;
+}
+
+.plus:hover{
+transform:rotate(90deg) scale(1.1);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+
+<div class="header">
+
+<div class="top">
+<div class="logo">🛒</div>
+<div class="notif">🔔</div>
+</div>
+
+<h1>
+EmprendeControl
+<span class="pro">PRO</span>
+</h1>
+
+<p>
+Gestiona pedidos, ingresos y métodos de pago de manera rápida y sencilla desde cualquier celular.
+</p>
+
+<div class="menu">
+
+<div class="menu-item">
+📦<br>Ventas
+</div>
+
+<div class="menu-item">
+📊<br>Ingresos
+</div>
+
+<div class="menu-item">
+🧾<br>Historial
+</div>
+
+<div class="menu-item">
+📈<br>Reportes
+</div>
+
+</div>
+
+</div>
+
+<!-- FORM -->
+
+<div class="card">
+
+<h2>➕ Registrar Venta</h2>
+
+<input type="text" id="cliente" placeholder="Nombre del cliente">
+
+<input type="text" id="producto" placeholder="Producto o servicio">
+
+<select id="categoria">
+<option value="">Categoría</option>
+<option>Comida</option>
+<option>Ropa</option>
+<option>Belleza</option>
+<option>Tecnología</option>
+<option>Otros</option>
+</select>
+
+<input type="number" id="monto" placeholder="Monto S/">
+
+<select id="metodo">
+<option value="">Método de pago</option>
+<option>💜 Yape</option>
+<option>💙 Plin</option>
+<option>💵 Efectivo</option>
+<option>💳 Tarjeta Crédito</option>
+<option>🏦 Tarjeta Débito</option>
+<option>📲 Transferencia</option>
+</select>
+
+<button onclick="guardarVenta()">
+Guardar Venta
+</button>
+
+</div>
+
+<!-- RESUMEN -->
+
+<div class="card">
+
+<h2>📈 Resumen General</h2>
+
+<div class="total">
+S/ <span id="total">0</span>
+</div>
+
+<div class="grafico">
+<div class="barra" id="barra">0%</div>
+</div>
+
+<div id="resumenMetodos"></div>
+
+</div>
+
+<!-- HISTORIAL -->
+
+<div class="card">
+
+<h2>🧾 Historial</h2>
+
+<ul class="historial" id="historial"></ul>
+
+</div>
+
+</div>
+
+<!-- MENU ABAJO -->
+
+<div class="bottom">
+
+<div onclick="document.querySelector('.container').scrollIntoView({behavior:'smooth'})">
+🏠<br>Inicio
+</div>
+
+<div class="plus" onclick="document.getElementById('cliente').focus()">
++
+</div>
+
+<div onclick="exportarDatos()">
+⚙️<br>Ajustes
+</div>
+
+</div>
+
+<script>
+
+let ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+let editando = null;
+
+function calcularPorMetodo(){
+const resumen = {};
+
+ventas.forEach(venta => {
+if(!resumen[venta.metodo]){
+resumen[venta.metodo] = 0;
+}
+resumen[venta.metodo] += Number(venta.monto);
+});
+
+return resumen;
+}
+
+function actualizarResumen(){
+const resumenMetodos = document.getElementById("resumenMetodos");
+const resumen = calcularPorMetodo();
+
+resumenMetodos.innerHTML = "";
+
+Object.entries(resumen).forEach(([metodo, monto]) => {
+resumenMetodos.innerHTML += `
+<div class="metodo">
+<span>${metodo}</span>
+<span>S/ ${monto.toFixed(2)}</span>
+</div>
+`;
+});
+}
+
+function actualizar(){
+
+const historial = document.getElementById("historial");
+const total = document.getElementById("total");
+const barra = document.getElementById("barra");
+
+historial.innerHTML = "";
+
+let suma = 0;
+
+if(ventas.length === 0){
+
+historial.innerHTML = `
+<li>
+No hay ventas registradas aún 📭
+</li>
+`;
+
+}
+
+ventas.forEach((venta,index)=>{
+
+suma += Number(venta.monto);
+
+historial.innerHTML += `
+
+<li>
+
+<span class="tag">${venta.metodo}</span>
+
+<strong>${venta.cliente}</strong><br>
+
+${venta.producto}<br>
+
+<div class="fecha">
+${venta.fecha}
+</div>
+
+<h3 style="margin-top:10px;">
+S/ ${venta.monto}
+</h3>
+
+<div class="acciones">
+
+<button class="editar" onclick="editar(${index})">
+Editar
+</button>
+
+<button class="eliminar" onclick="eliminar(${index})">
+Eliminar
+</button>
+
+</div>
+
+</li>
+
+`;
+
+});
+
+localStorage.setItem("ventas",JSON.stringify(ventas));
+
+total.textContent = suma.toFixed(2);
+
+const porcentaje = Math.min(suma,1000)/10;
+
+barra.style.width = porcentaje + "%";
+
+barra.textContent = porcentaje.toFixed(0) + "%";
+
+actualizarResumen();
+
+}
+
+function guardarVenta(){
+
+const cliente = document.getElementById("cliente").value.trim();
+const producto = document.getElementById("producto").value.trim();
+const categoria = document.getElementById("categoria").value.trim();
+const monto = document.getElementById("monto").value.trim();
+const metodo = document.getElementById("metodo").value.trim();
+
+if(cliente==="" || producto==="" || categoria==="" || monto==="" || metodo===""){
+
+alert("⚠️ Completa todos los campos");
+
+return;
+
+}
+
+const fecha = new Date().toLocaleString();
+
+const venta = {
+cliente,
+producto,
+categoria,
+monto,
+metodo,
+fecha
+};
+
+if(editando===null){
+
+ventas.push(venta);
+alert("✅ Venta guardada correctamente");
+
+}else{
+
+ventas[editando] = venta;
+alert("✏️ Venta actualizada");
+editando = null;
+
+}
+
+limpiar();
+
+actualizar();
+
+}
+
+function editar(index){
+
+const venta = ventas[index];
+
+document.getElementById("cliente").value = venta.cliente;
+document.getElementById("producto").value = venta.producto;
+document.getElementById("categoria").value = venta.categoria;
+document.getElementById("monto").value = venta.monto;
+document.getElementById("metodo").value = venta.metodo;
+
+editando = index;
+
+document.getElementById("cliente").focus();
+
+}
+
+function eliminar(index){
+
+if(confirm("¿Estás seguro de eliminar esta venta?")){
+
+ventas.splice(index,1);
+alert("🗑️ Venta eliminada");
+actualizar();
+
+}
+
+}
+
+function limpiar(){
+
+document.getElementById("cliente").value="";
+document.getElementById("producto").value="";
+document.getElementById("categoria").value="";
+document.getElementById("monto").value="";
+document.getElementById("metodo").value="";
+
+}
+
+function exportarDatos(){
+
+const datos = JSON.stringify(ventas, null, 2);
+const blob = new Blob([datos], {type: "application/json"});
+const url = URL.createObjectURL(blob);
+const a = document.createElement("a");
+a.href = url;
+a.download = "ventas_emprende.json";
+a.click();
+URL.revokeObjectURL(url);
+
+}
+
+actualizar();
+
+</script>
+
+</body>
+</html>
